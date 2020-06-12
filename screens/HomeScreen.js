@@ -30,8 +30,6 @@ export default function HomeScreen() {
   };
 
   const randomDrink = () => {
-    clearDrink();
-
     const numLiquors = Math.random() > 0.85 ? 2 : 1;
     const numLiqueurs = Math.random() > 0.5 ? 1 : 0;
     const numMixers = 1;
@@ -51,7 +49,12 @@ export default function HomeScreen() {
       >
         <View style={styles.headline}>
           <Text style={styles.header2}>Have a Drink</Text>
-          <TouchableOpacity onPress={randomDrink}>
+          <TouchableOpacity
+            onPress={() => {
+              clearDrink();
+              setTimeout(randomDrink, 80);
+            }}
+          >
             <Ionicons size={35} name="md-refresh" />
           </TouchableOpacity>
           <TouchableOpacity onPress={clearDrink}>
