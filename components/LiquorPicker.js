@@ -1,19 +1,23 @@
 import GenericPicker from "./GenericPicker";
 import React from "react";
 
-export default function LiquorPicker() {
-  const options = [
-    "Whiskey",
-    "Gin",
-    "Tequila",
-    "Vodka",
-    "Brandy",
-    "Burbon",
-    "Scotch",
-    "Rye",
-    "Dark Rum",
-    "Light Rum",
-  ];
+const options = [
+  "Whiskey",
+  "Gin",
+  "Tequila",
+  "Vodka",
+  "Brandy",
+  "Bourbon",
+  "Scotch",
+  "Rye",
+  "Dark Rum",
+  "Light Rum",
+];
 
+export default function LiquorPicker() {
   return <GenericPicker options={options} />;
 }
+
+export const randomLiquor = (name) => {
+  return options[Math.floor(Math.random() * options.length)];
+};

@@ -2,6 +2,7 @@ import * as React from "react";
 
 import HomeScreen from "../screens/HomeScreen";
 import LinksScreen from "../screens/LinksScreen";
+import MixerScreen from "../screens/MixerScreen";
 import TabBarIcon from "../components/TabBarIcon";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -20,9 +21,19 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Home"
         component={HomeScreen}
         options={{
-          title: "Drink Maker",
+          title: "12th Ave Bartender",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="ios-beer" />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Mixer"
+        component={MixerScreen}
+        options={{
+          title: "12th Ave Mixologist",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="ios-flask" />
           ),
         }}
       />
@@ -46,7 +57,9 @@ function getHeaderTitle(route) {
 
   switch (routeName) {
     case "Home":
-      return "Drink Maker";
+      return "12th Ave Bartender";
+    case "Mixer":
+      return "12th Ave Mixologist";
     case "Links":
       return "Settings";
   }

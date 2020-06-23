@@ -1,3 +1,4 @@
+import GarnishPicker, { randomGarnish } from "../components/GarnishPicker";
 import {
   Image,
   Picker,
@@ -9,24 +10,26 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 
-import GarnishPicker from "../components/GarnishPicker";
 import { Ionicons } from "@expo/vector-icons";
-import LiqueurPicker from "../components/LiqueurPicker";
-import LiquorPicker from "../components/LiquorPicker";
-import MixerPicker from "../components/MixerPicker";
 import { ScrollView } from "react-native-gesture-handler";
+import { randomDrinkName } from "../components/NamePicker";
+import { randomLiqueur } from "../components/LiqueurPicker";
+import { randomLiquor } from "../components/LiquorPicker";
+import { randomMixer } from "../components/MixerPicker";
 
 export default function HomeScreen() {
-  const [numberOfLiquors, setNumberOfLiquors] = useState(0);
-  const [numberOfLiqueurs, setNumberOfLiqueurs] = useState(0);
-  const [numberOfMixers, setNumberOfMixers] = useState(0);
-  const [numberOfGarnishes, setNumberOfGarnishes] = useState(0);
+  const [liquors, setLiquors] = useState([]);
+  const [liqueurs, setLiqueurs] = useState([]);
+  const [mixers, setMixers] = useState([]);
+  const [garnishes, setGarnishes] = useState([]);
+  const [name, setName] = useState("");
 
   const clearDrink = () => {
-    setNumberOfLiquors(0);
-    setNumberOfLiqueurs(0);
-    setNumberOfMixers(0);
-    setNumberOfGarnishes(0);
+    setLiquors([]);
+    setLiqueurs([]);
+    setMixers([]);
+    setGarnishes([]);
+    setName("");
   };
 
   const randomDrink = () => {
@@ -35,10 +38,34 @@ export default function HomeScreen() {
     const numMixers = 1;
     const numGarnishes = Math.random() > 0.9 ? 2 : 1;
 
-    setNumberOfLiquors(numLiquors);
-    setNumberOfLiqueurs(numLiqueurs);
-    setNumberOfMixers(numMixers);
-    setNumberOfGarnishes(numGarnishes);
+    setLiquors(
+      Array(numLiquors)
+        .fill(0)
+        .map((i, idx) => randomLiquor())
+    );
+    setLiqueurs(
+      Array(numLiqueurs)
+        .fill(0)
+        .map((i, idx) => randomLiqueur())
+    );
+
+    setMixers(
+      Array(numMixers)
+        .fill(0)
+        .map((i, idx) => randomMixer())
+    );
+
+    setGarnishes(
+      Array(numGarnishes)
+        .fill(0)
+        .map((i, idx) => randomGarnish())
+    );
+
+    const drink = randomDrinkName(
+      liquors.join() + liqueurs.join() + mixers.join() + garnishes.join()
+    );
+
+    setName(drink);
   };
 
   return (
@@ -52,7 +79,7 @@ export default function HomeScreen() {
           <TouchableOpacity
             onPress={() => {
               clearDrink();
-              setTimeout(randomDrink, 80);
+              randomDrink();
             }}
           >
             <Ionicons size={35} name="md-refresh" />
@@ -61,69 +88,34 @@ export default function HomeScreen() {
             <Ionicons size={35} name="ios-trash" />
           </TouchableOpacity>
         </View>
-
-        <View>
-          <View style={styles.headline}>
-            <Text style={styles.header}>Liquor:</Text>
-            <TouchableOpacity
-              onPress={() => setNumberOfLiquors(numberOfLiquors + 1)}
-            >
-              <Ionicons size={35} name="ios-add" />
-            </TouchableOpacity>
+        <View style={styles.container2}>
+          <View>
+            <Text style={styles.drinkName}>{name}</Text>
           </View>
-          {Array(numberOfLiquors)
-            .fill(0)
-            .map((i, idx) => (
-              <LiquorPicker key={idx} />
-            ))}
-        </View>
 
-        <View>
-          <View style={styles.headline}>
-            <Text style={styles.header}>Liqueur:</Text>
-            <TouchableOpacity
-              onPress={() => setNumberOfLiqueurs(numberOfLiqueurs + 1)}
-            >
-              <Ionicons size={35} name="ios-add" />
-            </TouchableOpacity>
-          </View>
-          {Array(numberOfLiqueurs)
-            .fill(0)
-            .map((i, idx) => (
-              <LiqueurPicker key={idx} />
+          <View>
+            {liquors.map((l) => (
+              <Text style={styles.ingredient}>{l}</Text>
             ))}
-        </View>
+          </View>
 
-        <View>
-          <View style={styles.headline}>
-            <Text style={styles.header}>Mixer:</Text>
-            <TouchableOpacity
-              onPress={() => setNumberOfMixers(numberOfMixers + 1)}
-            >
-              <Ionicons size={35} name="ios-add" />
-            </TouchableOpacity>
-          </View>
-          {Array(numberOfMixers)
-            .fill(0)
-            .map((i, idx) => (
-              <MixerPicker key={idx} />
+          <View>
+            {liqueurs.map((l) => (
+              <Text style={styles.ingredient}>{l}</Text>
             ))}
-        </View>
+          </View>
 
-        <View>
-          <View style={styles.headline}>
-            <Text style={styles.header}>Garnish:</Text>
-            <TouchableOpacity
-              onPress={() => setNumberOfGarnishes(numberOfGarnishes + 1)}
-            >
-              <Ionicons size={35} name="ios-add" />
-            </TouchableOpacity>
-          </View>
-          {Array(numberOfGarnishes)
-            .fill(0)
-            .map((i, idx) => (
-              <GarnishPicker key={idx} />
+          <View>
+            {mixers.map((l) => (
+              <Text style={styles.ingredient}>{l}</Text>
             ))}
+          </View>
+
+          <View>
+            {garnishes.map((l) => (
+              <Text style={styles.ingredient}>{l}</Text>
+            ))}
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -138,6 +130,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  container2: {
+    padding: 15,
+  },
+  drinkName: {
+    fontSize: 25,
+    fontWeight: "bold",
+  },
+  ingredient: {
+    fontSize: 25,
   },
   header2: {
     fontSize: 25,
