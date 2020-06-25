@@ -7,6 +7,7 @@ const options = [
   "Orange Slice",
   "Lime Slice",
   "Cherry",
+  "Mint",
   "Lime",
   "Salt Rim",
   "Pickle",

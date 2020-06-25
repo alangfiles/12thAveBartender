@@ -4,7 +4,7 @@ import React from "react";
 const options = [
   "Coffee",
   "Cola",
-  "Lemon Soda",
+  "Lemon-Lime Soda",
   "Club Soda",
   "Tonic",
   "Ginger Ale",
@@ -12,8 +12,12 @@ const options = [
   "Grenadine",
   "Simple Syrup",
   "Red Bull",
+  "Lemon Juice",
+  "Grapefruit Juice",
   "Pineapple Juice",
   "Cranberry Juice",
+  "Coconut Cream",
+  "Sour Mix",
   "Orange Juice",
   "Bitters",
 ];

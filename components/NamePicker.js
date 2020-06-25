@@ -121,7 +121,7 @@ const adjectives = [
   "Oily",
   "Royal",
   "Rambunctious",
-  "Ramshakle",
+  "Ramshackle",
   "Clogged",
   "Burning",
   "Toasted",
